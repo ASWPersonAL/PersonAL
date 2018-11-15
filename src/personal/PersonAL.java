@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 /**
  *
  * @author ASW
+ * Version Control with GitHub organization.
  */
 public class PersonAL extends Application {
     
