@@ -12,7 +12,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 
@@ -23,6 +26,8 @@ import javafx.scene.control.Label;
  * @author ASW
  */
 public class FXMLDocumentController implements Initializable {
+    
+    final static String performance = "Performance1";
     
     @FXML
     private Label label;
@@ -36,15 +41,21 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     LineChart<Double, Double> graph;
     
+      @FXML
+    CategoryAxis xAxis;
+    
+    @FXML
+    NumberAxis yAxis;
+    
+    @FXML
+    BarChart<String, Number> bar; 
   
     
     @FXML
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
         label.setText("Hello World!");
-        
-
-    
+          
     }
     
     @Override
@@ -88,7 +99,21 @@ public class FXMLDocumentController implements Initializable {
         
         graph.setData(lineChartData);
         graph.createSymbolsProperty();
-         
+        
+        //code for barchart
+        
+        xAxis.setLabel("Performance");
+        xAxis.setTickLabelRotation(90);
+        yAxis.setLabel("Percent");
+        
+        XYChart.Series<String, Number> series3 = new XYChart.Series();
+        series3.getData().add(new XYChart.Data(performance, 80));
+        
+        XYChart.Series<String, Number> series4 = new XYChart.Series();
+        series4.getData().add(new XYChart.Data(performance, 20));
+        
+        bar.getData().add(series3);
+        bar.getData().add(series4); 
     }    
     
 }
