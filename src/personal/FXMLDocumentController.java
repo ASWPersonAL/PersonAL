@@ -7,7 +7,16 @@ package personal;
 
 import java.net.URL;
 import java.sql.Connection;
+
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Date;
+//import java.sql.Date;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -72,11 +81,11 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     ListView listPF = new ListView();
     
-    private void populatePFList(){
+    //private void populatePFList(){
         
-        Connection con;
+      
         
-    }
+    //}
   
     
     @FXML
@@ -143,8 +152,28 @@ public class FXMLDocumentController implements Initializable {
         bar.getData().add(series3);
         bar.getData().add(series4); 
         
+        //COde for connecting to DB fifi with Peak flow db table. 
+        //The attributes value and date are shown in view.
         
-    
+        Connection con;
+        try{
+            con = DriverManager.getConnection("jdbc:derby://localhost:1527/fifi", "fifi", "fifi");
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM FIFI.PEAKFLOW");
+            
+            while(rs.next()){
+                int i = rs.getInt("PF_VALUE");
+                Date d = rs.getDate("PF_DATE");
+            listPF.getItems().add("Peak flow value: " + i + " L/min");
+            listPF.getItems().add("Peak flow measurement date: " + d);
+                
+            }
+        
+        
+        }
+        catch (SQLException ex){
+            Logger.getLogger(PersonAL.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
   }    
     
