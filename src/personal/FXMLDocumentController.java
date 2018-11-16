@@ -6,6 +6,7 @@
 package personal;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,8 +19,11 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.DatePicker;
 
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.text.Text;
 
 /**
  *
@@ -28,6 +32,21 @@ import javafx.scene.control.Label;
 public class FXMLDocumentController implements Initializable {
     
     final static String performance = "Performance1";
+    
+    
+       //DatePicker
+        
+        @FXML
+        private Text actiontarget;
+        
+        @FXML
+        private DatePicker datepicker;
+        
+        @FXML
+        protected void handleDatePickerAction(ActionEvent event)
+        {
+            actiontarget.setText(datepicker.getValue().toString());
+        }
     
     @FXML
     private Label label;
@@ -49,6 +68,15 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     BarChart<String, Number> bar; 
+    
+    @FXML
+    ListView listPF = new ListView();
+    
+    private void populatePFList(){
+        
+        Connection con;
+        
+    }
   
     
     @FXML
@@ -114,6 +142,10 @@ public class FXMLDocumentController implements Initializable {
         
         bar.getData().add(series3);
         bar.getData().add(series4); 
-    }    
+        
+        
+    
+        
+  }    
     
 }
