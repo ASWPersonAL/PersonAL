@@ -168,8 +168,6 @@ public class FXMLDocumentController implements Initializable {
             listPF.getItems().add("Peak flow measurement date: " + d);
                 
             }
-        
-        
         }
         catch (SQLException ex){
             Logger.getLogger(PersonAL.class.getName()).log(Level.SEVERE, null, ex);
