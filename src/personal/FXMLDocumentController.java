@@ -82,9 +82,20 @@ public class FXMLDocumentController implements Initializable {
     ListView listPF = new ListView();
     
     //private void populatePFList(){
-        
-      
-        
+    
+    //Code for lineChart with DB Peak flow table data
+    
+    @FXML
+    final CategoryAxis xAxis1 = new CategoryAxis();
+    
+    @FXML
+    final NumberAxis yAxis1 = new NumberAxis();
+    
+    @FXML 
+    LineChart<String, Number> bc; 
+            //= 
+            //new LineChart<String, Number>(xAxis1, yAxis1);
+   
     //}
   
     
@@ -168,6 +179,50 @@ public class FXMLDocumentController implements Initializable {
             listPF.getItems().add("Peak flow measurement date: " + d);
                 
             }
+        }
+        catch (SQLException ex){
+            Logger.getLogger(PersonAL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+       //final CategoryAxis xAxis = new CategoryAxis(); 
+       //final NumberAxis yAxis = new NumberAxis();
+        
+       //final LineChart<String,Number> bc = 
+               //new LineChart<String,Number>(xAxis, yAxis);
+        bc.setTitle("Peak FLow");
+        xAxis.setLabel("Measurement Date");
+        yAxis.setLabel("Peak Flow values");
+        
+       
+      
+        
+         Connection con1;
+        try{
+            con1 = DriverManager.getConnection("jdbc:derby://localhost:1527/fifi", "fifi", "fifi");
+            Statement stmt = con1.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM FIFI.PEAKFLOW");
+            //FETCH FIRST 3 ROWS ONLY");
+            
+
+            while(rs.next())
+            {
+                //XYChart.Series series10 = new XYChart.Series();
+                
+                ObservableList<XYChart.Series<String,Number>> LineChartData1 = FXCollections.observableArrayList();
+                
+                LineChart.Series<String,Number> series10 = new LineChart.Series<String,Number>();
+                
+                
+                series10.getData().add(new XYChart.Data<String,Number>(rs.getDate(3).toString(),rs.getInt(2)));
+                bc.getData().add(series10);
+            }
+            
+                    //ObservableList<XYChart.Series<Double, Double>> lineChartData = FXCollections.observableArrayList();
+                      //      LineChart.Series<Double, Double> series1 = new LineChart.Series<Double, Double>();
+
+             
+          
         }
         catch (SQLException ex){
             Logger.getLogger(PersonAL.class.getName()).log(Level.SEVERE, null, ex);
